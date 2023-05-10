@@ -22,5 +22,9 @@
             <artifactId>interface</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.hundsun.jrescloud.middleware</groupId>
+            <artifactId>jrescloud-starter-mybatis</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -21,16 +21,6 @@
             <groupId>com.hundsun.jrescloud</groupId>
             <artifactId>jrescloud-starter-rpc-def</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.hundsun.jrescloud.middleware</groupId>
-            <artifactId>jrescloud-starter-mybatis</artifactId>
-        </dependency>
     </dependencies>
 
 </project>
