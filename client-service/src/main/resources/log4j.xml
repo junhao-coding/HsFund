@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration status="WARN" packages="org.apache-server.logging-server.log4j.core.pattern" monitorInterval="10">
+    <properties>
+        <!-- 文件输出格式 -->
+        <property name="PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} |-%-5level [%thread] %c [%L] -| %msg%n</property>
+    </properties>
+
+    <appenders>
+        <Console name="CONSOLE" target="system_out">
+            <PatternLayout pattern="${PATTERN}" />
+        </Console>
+
+        <RollingFile name="File" fileName="logs/AppLog.log" filePattern="logs/bak/server/AppLog-%d{yyyyMMdd}-%i-server.log.gz">
+            <PatternLayout pattern="${PATTERN}" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+        </RollingFile>
+
+        <Async name="AsyncAppLog">
+            <AppenderRef ref="File" />
+        </Async>
+
+        <Async name="AsyncCONSOLE">
+            <AppenderRef ref="CONSOLE" />
+        </Async>
+    </appenders>
+
+    <loggers>
+        <AsyncLogger name="com.fund.client.impl" level="info" additivity="false">
+            <AppenderRef ref="AsyncAppLog" />
+            <AppenderRef ref="AsyncCONSOLE" />
+        </AsyncLogger>
+
+
+        <root level="info">
+            <AppenderRef ref="AsyncCONSOLE" />
+            <AppenderRef ref="AsyncAppLog" />
+        </root>
+    </loggers>
+
+</configuration>

@@ -1,0 +1,10 @@
+app:
+    name: business-service
+    group: group
+    version: v
+    server:
+      port: 8081
+    registry:
+      address: 101.42.13.62:2181
+config:
+  location: classpath:middleware.yml
