@@ -19,27 +19,23 @@ public class Client implements Serializable {
     /**
     * 
     */
-    @NotNull(message="[]不能为空")
     private Integer clientId;
     /**
     * 
     */
-    @NotBlank(message="[]不能为空")
-    @Size(max= 8,message="编码长度不能超过8")
+    @NotBlank(message="客户姓名不能为空")
     @Length(max= 8,message="编码长度不能超过8")
     private String clientName;
     /**
     * 
     */
-    @NotBlank(message="[]不能为空")
-    @Size(max= 8,message="编码长度不能超过8")
+    @NotBlank(message="客户类型不能为空")
     @Length(max= 8,message="编码长度不能超过8")
     private String clientType;
     /**
     * 
     */
-    @NotBlank(message="[]不能为空")
-    @Size(max= 8,message="编码长度不能超过8")
+    @NotBlank(message="身份证类型不能为空")
     @Length(max= 8,message="编码长度不能超过8")
     private String cardType;
     /**
@@ -49,29 +45,27 @@ public class Client implements Serializable {
     /**
     * 
     */
-    @NotBlank(message="[]不能为空")
-    @Size(max= 1,message="编码长度不能超过1")
+    @NotBlank(message="性别不能为空")
     @Length(max= 1,message="编码长度不能超过1")
     private String sex;
     /**
     * 
     */
-    @NotNull(message="[]不能为空")
+    @NotNull(message="年龄不能为空")
     private Integer age;
     /**
     * 
     */
-    @NotNull(message="[]不能为空")
+    @NotNull(message="联系电话不能为空")
     private String phoneNumber;
     /**
     * 
     */
-    @NotNull(message="[]不能为空")
+    @NotNull(message="风险等级不能为空")
     private Integer riskLevel;
     /**
     * 
     */
-    @NotNull(message="[]不能为空")
     private Date createTime;
 
 }

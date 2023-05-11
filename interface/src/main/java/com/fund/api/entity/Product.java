@@ -19,76 +19,70 @@ public class Product implements Serializable {
     /**
      *
      */
-    @NotNull(message = "[]不能为空")
     private Integer productId;
     /**
      *
      */
-    @NotBlank(message = "[]不能为空")
-    @Size(max = 32, message = "编码长度不能超过32")
+    @NotBlank(message = "产品名称不能为空")
     @Length(max = 32, message = "编码长度不能超过32")
     private String productName;
     /**
      *
      */
-    @NotNull(message = "[]不能为空")
+    @NotNull(message = "净值不能为空")
     private BigDecimal netWorth;
     /**
      *
      */
-    @NotNull(message = "[]不能为空")
+    @NotNull(message = "旧净值不能为空，第一次输入时可以用净值替代")
     private BigDecimal netWorthOld;
     /**
      *
      */
-    @NotNull(message = "[]不能为空")
+    @NotNull(message = "份额不能为空")
     private BigDecimal portion;
     /**
      *
      */
-    @NotBlank(message = "[]不能为空")
-    @Size(max = 3, message = "编码长度不能超过3")
+    @NotBlank(message = "产品类型不能为空")
     @Length(max = 3, message = "编码长度不能超过3")
     private String productType;
     /**
      *
      */
-    @NotNull(message = "[]不能为空")
+    @NotNull(message = "风险等级不能为空")
     private Integer riskLevel;
     /**
      *
      */
-    @NotNull(message = "[]不能为空")
+    @NotNull(message = "申购状态不能为空")
     private Boolean purchaseState;
     /**
      *
      */
-    @NotNull(message = "[]不能为空")
+    @NotNull(message = "赎回状态不能为空")
     private Boolean sellState;
     /**
      *
      */
-    @NotNull(message = "[]不能为空")
+    @NotNull(message = "成立日期不能为空")
     private Date setDate;
     /**
      *
      */
-    @NotBlank(message = "[]不能为空")
-    @Size(max = 16, message = "编码长度不能超过16")
+    @NotBlank(message = "基金公司不能为空")
     @Length(max = 16, message = "编码长度不能超过16")
     private String productAdmin;
     /**
      *
      */
-    @NotBlank(message = "[]不能为空")
-    @Size(max = 8, message = "编码长度不能超过8")
+    @NotBlank(message = "基金经理不能为空")
     @Length(max = 8, message = "编码长度不能超过8")
     private String productManager;
     /**
      *
      */
-    @NotBlank(message = "[]不能为空")
-    @Size(max = 16, message = "编码长度不能超过16")
+    @NotBlank(message = "基金托管方不能为空")
     @Length(max = 16, message = "编码长度不能超过16")
     private String productCustodian;
 }

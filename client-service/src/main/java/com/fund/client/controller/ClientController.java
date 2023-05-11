@@ -3,11 +3,12 @@ package com.fund.client.controller;
 import com.fund.api.dto.Result;
 import com.fund.api.entity.Client;
 import com.fund.api.service.ClientService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
+import javax.validation.Valid;
+
 
 /**
  * @author JunHao Yu
@@ -26,12 +27,12 @@ public class ClientController {
         return Result.ok(clientService.selectClientById(id));
     }
     @PostMapping()
-    public Result addClient(@RequestBody Client client){
+    public Result addClient(@RequestBody @Valid Client client){
         clientService.addClient(client);
         return Result.ok();
     }
     @PutMapping()
-    public Result updateClient(@RequestBody Client client){
+    public Result updateClient(@RequestBody @Valid Client client){
         clientService.updateClient(client);
         return Result.ok();
     }
