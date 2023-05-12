@@ -1,10 +1,26 @@
 package com.fund.api.service;
 
-/**
- * @author JunHao Yu
- * @version 1.0
- * @Description: <br/>
- * @date 2023/05/11  17:03
- */
+import com.fund.api.dto.Result;
+import com.fund.api.entity.Product;
+import com.hundsun.jrescloud.rpc.annotation.CloudService;
+
+
+
+
+@CloudService
 public interface ProductService {
+
+    void addProduct(Product product);
+
+    Product getProductById(String id);
+
+    void updateProduct(Product product);
+
+    void deleteProductById(String id);
+
+    Result getProductByPage(Integer page,Integer pageSize);
+
+
+
+
 }

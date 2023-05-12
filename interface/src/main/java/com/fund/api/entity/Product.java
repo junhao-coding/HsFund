@@ -6,19 +6,18 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
-import java.util.Date;
+
+
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
-/**
-* 
-* @TableName product
-*/
+@Data
 public class Product implements Serializable {
 
     /**
-     *
+     * 6位长数字
      */
-    private Integer productId;
+    private String productId;
     /**
      *
      */
@@ -50,22 +49,26 @@ public class Product implements Serializable {
      *
      */
     @NotNull(message = "风险等级不能为空")
+    //1（谨慎型），2（稳健型），3（平衡型），4（进取型），5（激进型）
     private Integer riskLevel;
     /**
      *
      */
+    //0 暂停 1正常
     @NotNull(message = "申购状态不能为空")
-    private Boolean purchaseState;
+    private Integer purchaseState;
     /**
      *
      */
+    //0 暂停 1正常
     @NotNull(message = "赎回状态不能为空")
-    private Boolean sellState;
+    private Integer sellState;
     /**
      *
      */
+    //形如2021-10-21
     @NotNull(message = "成立日期不能为空")
-    private Date setDate;
+    private String setDate;
     /**
      *
      */
