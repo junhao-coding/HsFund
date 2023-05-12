@@ -1,7 +1,6 @@
 package com.fund.api.entity;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import javax.validation.constraints.NotNull;
 
 import java.io.Serializable;
