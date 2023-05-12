@@ -22,13 +22,13 @@ public class Result {
     private Long total;
 
     public static Result ok(){
-        return new Result(true, null, null, null);
+        return new Result(true, "", null, null);
     }
     public static Result ok(Object data){
-        return new Result(true, null, data, null);
+        return new Result(true, "", data, null);
     }
     public static Result ok(List<?> data, Long total){
-        return new Result(true, null, data, total);
+        return new Result(true, "", data, total);
     }
     public static Result fail(Integer code, String errorMsg){
         return new Result(true, errorMsg, null, null);
