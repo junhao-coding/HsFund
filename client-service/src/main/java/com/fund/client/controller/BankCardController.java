@@ -29,9 +29,17 @@ public class BankCardController {
     }
 
     @GetMapping("/{clientId}")
-    public Result getBankCardsPage(@PathVariable("clientId") int clientId){
+    public Result getBankCards(@PathVariable("clientId") int clientId){
         List<BankCard> bankCards = bankCardService.getAllByClientId(clientId);
+        if(bankCards == null || bankCards.size() == 0){
+            return Result.fail("该用户未绑定任何银行卡");
+        }
         return Result.ok(bankCards, (long) bankCards.size());
+    }
+
+    @GetMapping("/balance/{cardId}")
+    public Result getBalance(@PathVariable("cardId") String cardId){
+        return Result.ok(bankCardService.getBalance(cardId));
     }
     @PutMapping()
     public Result updateBalance(@RequestParam(value = "cardId") String cardId,

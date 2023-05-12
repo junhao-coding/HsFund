@@ -1,5 +1,6 @@
 package com.fund.client.impl;
 
+import com.fund.api.dto.Page;
 import com.fund.api.entity.Client;
 import com.fund.api.service.ClientService;
 import com.fund.client.mapper.ClientMapper;
@@ -46,11 +47,15 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> selectClientByPage(int pageNum, int pageSize) {
+    public Client selectClientByName(String name) {
+        return clientMapper.getClientByName(name);
+    }
+
+    @Override
+    public Page<Client> selectClientByPage(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Client> clientList = clientMapper.getClientAll();
         PageInfo<Client> clientPageInfo = new PageInfo<>(clientList);
-        logger.info("clientPageInfo:{}", clientPageInfo);
-        return clientList;
+        return new Page<>(clientList, clientPageInfo.getTotal(), clientPageInfo.getPages());
     }
 }

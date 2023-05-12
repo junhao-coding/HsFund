@@ -30,7 +30,7 @@ public class Result {
     public static Result ok(List<?> data, Long total){
         return new Result(true, "", data, total);
     }
-    public static Result fail(Integer code, String errorMsg){
-        return new Result(true, errorMsg, null, null);
+    public static Result fail(String errorMsg){
+        return new Result(false, errorMsg, null, null);
     }
 }

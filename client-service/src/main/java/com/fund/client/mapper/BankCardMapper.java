@@ -17,8 +17,11 @@ public interface BankCardMapper {
     @Insert("insert into bank_card(card_id,client_id, balance) values (#{cardId}, #{clientId}, #{balance})")
     void addBankCard(BankCard bankCard);
 
-    @Select("select * from bank_card where client_id = #{clientId}")
+    @Select("select (card_id,client_id, balance, create_time, update_time) from bank_card where client_id = #{clientId}")
     List<BankCard> getAllByClientId(int clientId);
+
+    @Select("select balance from bank_card where card_id = #{cardId} ")
+    BigDecimal getBalance(String cardId);
 
     @Update("update bank_card set balance = balance + #{change} where card_id = #{cardId}")
     void updateBalance(@Param("cardId") String cardId, @Param("change") BigDecimal change);

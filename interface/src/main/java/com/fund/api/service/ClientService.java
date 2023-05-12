@@ -1,5 +1,6 @@
 package com.fund.api.service;
 
+import com.fund.api.dto.Page;
 import com.fund.api.entity.Client;
 import com.hundsun.jrescloud.rpc.annotation.CloudService;
 
@@ -21,5 +22,7 @@ public interface ClientService {
 
     Client selectClientById(int id);
 
-    List<Client> selectClientByPage(int pageNum, int pageSize);
+    Client selectClientByName(String name);
+
+    Page<Client> selectClientByPage(int pageNum, int pageSize);
 }
