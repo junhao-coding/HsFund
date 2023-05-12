@@ -7,12 +7,15 @@ import java.io.Serializable;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 /**
 * 
 * @TableName product
 */
+@Data
 public class Product implements Serializable {
 
     /**
