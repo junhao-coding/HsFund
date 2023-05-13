@@ -1,10 +1,10 @@
 package com.fund.client.controller;
 
+import com.fund.api.dto.Page;
 import com.fund.api.dto.Result;
 import com.fund.api.entity.Client;
 import com.fund.api.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,11 +24,30 @@ public class ClientController {
 
     @GetMapping("/{id}")
     public Result getClientById(@PathVariable("id") int id){
-        return Result.ok(clientService.selectClientById(id));
+        Client client = clientService.selectClientById(id);
+        if(client == null){
+            return Result.fail("不存在该用户");
+        }
+        return Result.ok(client);
     }
+
+    @GetMapping("/{name}")
+    public Result getClientById(@PathVariable("name") String name){
+        Client client = clientService.selectClientByName(name);
+        if(client == null){
+            return Result.fail("不存在该用户");
+        }
+        return Result.ok(client);
+    }
+
     @PostMapping()
     public Result addClient(@RequestBody @Valid Client client){
-        clientService.addClient(client);
+        if(clientService.selectClientById(client.getClientId()) == null){
+            return Result.fail("该用户已存在");
+        }
+        if(clientService.selectClientByName(client.getClientName()) == null){
+            return Result.fail("该用户已存在");
+        }
         return Result.ok();
     }
     @PutMapping()
@@ -41,9 +60,10 @@ public class ClientController {
         clientService.deleteClientById(id);
         return Result.ok();
     }
-    @GetMapping
+    @GetMapping("/page")
     public Result getClientByPage(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                   @RequestParam(value = "pageSize", defaultValue = "5") int pageSize) {
-        return Result.ok(clientService.selectClientByPage(pageNum, pageSize));
+        Page<Client> clientPage = clientService.selectClientByPage(pageNum, pageSize);
+        return Result.ok(clientPage);
     }
 }
