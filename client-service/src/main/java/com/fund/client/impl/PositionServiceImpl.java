@@ -64,6 +64,6 @@ public class PositionServiceImpl implements PositionService {
     @Override
     public List<String> getOrdersByPositionId(int year, int month, long positionId) {
         List<BigDecimal> orderList = positionOrderMapper.getOrdersByPositionId(year, month, positionId);
-        return orderList.stream().map((position) -> position.stripTrailingZeros().toString()).collect(toList());
+        return orderList.stream().map((position) -> position.stripTrailingZeros().toPlainString()).collect(toList());
     }
 }

@@ -5,6 +5,7 @@ import com.fund.api.entity.ClientPosition;
 import com.fund.api.service.PositionService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
@@ -30,6 +31,7 @@ public class PositionController {
     }
 
     @PutMapping
+    @Transactional
     public Result updatePosition(@RequestParam("positionId") long positionId,
                                  @RequestParam("changePosition") String changePosition){
         positionService.updatePosition(positionId, new BigDecimal(changePosition));
@@ -42,14 +44,14 @@ public class PositionController {
         if(positionList == null){
             return Result.fail("该用户当前未建仓");
         }
-        return Result.ok();
+        return Result.ok(positionList);
     }
 
-    @GetMapping("/{positionId}")
+    @GetMapping
     public Result getOrdersByPositionId(@RequestParam("year") int year,
                                         @RequestParam("month") int month,
                                         @RequestParam("positionId") long positionId){
-        positionService.getOrdersByPositionId(year, month, positionId);
-        return Result.ok();
+        List<String> positionOrders = positionService.getOrdersByPositionId(year, month, positionId);
+        return Result.ok(positionOrders);
     }
 }

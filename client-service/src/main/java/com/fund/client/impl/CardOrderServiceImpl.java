@@ -39,6 +39,6 @@ public class CardOrderServiceImpl implements CardOrderService {
     @Override
     public List<String> getOrdersByCardId(int year, int month, long cardId) {
         List<BigDecimal> orderList = cardOrderMapper.getOrdersByCardId(year, month, cardId);
-        return orderList.stream().map((position) -> position.stripTrailingZeros().toString()).collect(Collectors.toList());
+        return orderList.stream().map((position) -> position.stripTrailingZeros().toPlainString()).collect(Collectors.toList());
     }
 }

@@ -3,6 +3,7 @@ package com.fund.client;
 import com.hundsun.jrescloud.common.boot.CloudApplication;
 import com.hundsun.jrescloud.common.boot.CloudBootstrap;
 import com.hundsun.jrescloud.db.core.configuration.EnableCloudDataSource;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @author JunHao Yu
@@ -12,6 +13,7 @@ import com.hundsun.jrescloud.db.core.configuration.EnableCloudDataSource;
  */
 @EnableCloudDataSource
 @CloudApplication
+@EnableTransactionManagement
 public class ClientStarter {
     public static void main(String[] args) {
         CloudBootstrap.run(ClientStarter.class, args);
