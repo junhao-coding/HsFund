@@ -47,8 +47,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client selectClientByName(String name) {
-        return clientMapper.getClientByName(name);
+    public List<String> selectClientByLikeName(String likeName) {
+        return clientMapper.getClientByLikeName(likeName);
     }
 
     @Override

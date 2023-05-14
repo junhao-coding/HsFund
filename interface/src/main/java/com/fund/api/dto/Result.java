@@ -19,18 +19,17 @@ public class Result {
     private Boolean success;
     private String errorMsg;
     private Object data;
-    private Long total;
 
     public static Result ok(){
-        return new Result(true, "", null, null);
+        return new Result(true, "", null);
     }
     public static Result ok(Object data){
-        return new Result(true, "", data, null);
+        return new Result(true, "", data);
     }
     public static Result ok(List<?> data, Long total){
-        return new Result(true, "", data, total);
+        return new Result(true, "", data);
     }
     public static Result fail(String errorMsg){
-        return new Result(false, errorMsg, null, null);
+        return new Result(false, errorMsg, null);
     }
 }

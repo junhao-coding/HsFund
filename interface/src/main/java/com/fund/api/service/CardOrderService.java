@@ -1,10 +1,9 @@
 package com.fund.api.service;
 
-import com.fund.api.entity.CardOrder;
 import com.hundsun.jrescloud.rpc.annotation.CloudService;
 
-import javax.smartcardio.Card;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @author JunHao Yu
@@ -15,4 +14,6 @@ import java.math.BigDecimal;
 @CloudService
 public interface CardOrderService {
     void addCardOrder(String cardId, BigDecimal orderAmount);
+
+    List<String> getOrdersByCardId(int year, int month, long cardId);
 }

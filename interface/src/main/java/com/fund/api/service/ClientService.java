@@ -22,7 +22,7 @@ public interface ClientService {
 
     Client selectClientById(int id);
 
-    Client selectClientByName(String name);
+    List<String> selectClientByLikeName(String likeName);
 
     Page<Client> selectClientByPage(int pageNum, int pageSize);
 }

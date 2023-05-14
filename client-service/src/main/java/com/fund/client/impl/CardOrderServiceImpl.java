@@ -9,6 +9,8 @@ import com.hundsun.jrescloud.rpc.annotation.CloudComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author JunHao Yu
@@ -32,5 +34,11 @@ public class CardOrderServiceImpl implements CardOrderService {
         long id = idGenerator.nextId();
         cardOrder.setCardOrderId(id);
         cardOrderMapper.addCardOrder(cardOrder);
+    }
+
+    @Override
+    public List<String> getOrdersByCardId(int year, int month, long cardId) {
+        List<BigDecimal> orderList = cardOrderMapper.getOrdersByCardId(year, month, cardId);
+        return orderList.stream().map((position) -> position.stripTrailingZeros().toString()).collect(Collectors.toList());
     }
 }

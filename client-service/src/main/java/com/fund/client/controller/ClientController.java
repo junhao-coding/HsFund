@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 /**
@@ -31,22 +32,18 @@ public class ClientController {
         return Result.ok(client);
     }
 
-    @GetMapping("/{name}")
-    public Result getClientById(@PathVariable("name") String name){
-        Client client = clientService.selectClientByName(name);
-        if(client == null){
-            return Result.fail("不存在该用户");
-        }
-        return Result.ok(client);
+    @GetMapping
+    public Result getNameLikely(@RequestParam("name") String name){
+        String likeName = name + "%";
+        List<String> nameList = clientService.selectClientByLikeName(likeName);
+        return Result.ok(nameList);
     }
 
     @PostMapping()
     public Result addClient(@RequestBody @Valid Client client){
-        if(clientService.selectClientById(client.getClientId()) == null){
-            return Result.fail("该用户已存在");
-        }
-        if(clientService.selectClientByName(client.getClientName()) == null){
-            return Result.fail("该用户已存在");
+        List<String> nameList = clientService.selectClientByLikeName(client.getClientName());
+        if(nameList.size() != 0){
+            return Result.fail("用户名已存在");
         }
         return Result.ok();
     }

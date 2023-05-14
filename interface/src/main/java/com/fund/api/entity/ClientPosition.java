@@ -20,7 +20,7 @@ public class ClientPosition implements Serializable {
     private Long positionId;
 
     @NotNull(message="基金代码不能为空")
-    private Integer productId;
+    private String productId;
 
     @NotNull(message="客户账号不能为空")
     private Integer clientId;

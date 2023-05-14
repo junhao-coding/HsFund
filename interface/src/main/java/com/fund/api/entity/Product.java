@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.Length;
 public class Product implements Serializable {
 
     /**
-     * 6位长数字
+     \* 6位长数字
      */
     private String productId;
     /**

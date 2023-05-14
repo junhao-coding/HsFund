@@ -17,7 +17,7 @@ public interface BankCardMapper {
     @Insert("insert into bank_card(card_id,client_id, balance) values (#{cardId}, #{clientId}, #{balance})")
     void addBankCard(BankCard bankCard);
 
-    @Select("select (card_id,client_id, balance, create_time, update_time) from bank_card where client_id = #{clientId}")
+    @Select("select card_id, client_id, balance, create_time, update_time from bank_card where client_id = #{clientId}")
     List<BankCard> getAllByClientId(int clientId);
 
     @Select("select balance from bank_card where card_id = #{cardId} ")

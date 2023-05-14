@@ -40,17 +40,16 @@ public interface ClientMapper {
      * @param id 客户编号
      * @return 返回客户对象
      */
-    @Select("select (client_id, client_name, client_type, card_type, card_number, sex, age, phone_number, risk_level, create_time) " +
+    @Select("select client_id, client_name, client_type, card_type, card_number, sex, age, phone_number, risk_level, create_time " +
             "from client where client_id = #{id}")
     Client getClientById(@Param("id") int id);
 
-    @Select("select (client_id, client_name, client_type, card_type, card_number, sex, age, phone_number, risk_level, create_time) " +
-            "from client where client_name = #{name}")
-    Client getClientByName(@Param("name") String name);
+    @Select("select client_name from client where client_name like #{likeName}")
+    List<String> getClientByLikeName(String likeName);
 
     /**
      * @return  返回查询的所有客户对象，注意要使用分页插件。
      */
-    @Select("select (client_id, client_name, client_type, card_type, card_number, sex, age, phone_number, risk_level, create_time) from client")
+    @Select("select client_id, client_name, client_type, card_type, card_number, sex, age, phone_number, risk_level, create_time from client")
     List<Client> getClientAll();
 }
