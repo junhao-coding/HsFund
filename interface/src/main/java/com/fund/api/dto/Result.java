@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 /**
  * @author JunHao Yu
  * @version 1.0
@@ -24,9 +22,6 @@ public class Result {
         return new Result(true, "", null);
     }
     public static Result ok(Object data){
-        return new Result(true, "", data);
-    }
-    public static Result ok(List<?> data, Long total){
         return new Result(true, "", data);
     }
     public static Result fail(String errorMsg){

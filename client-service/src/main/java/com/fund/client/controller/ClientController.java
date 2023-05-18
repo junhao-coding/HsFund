@@ -45,6 +45,7 @@ public class ClientController {
         if(nameList.size() != 0){
             return Result.fail("用户名已存在");
         }
+        clientService.addClient(client);
         return Result.ok();
     }
     @PutMapping()

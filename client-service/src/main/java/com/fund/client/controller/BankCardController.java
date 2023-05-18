@@ -4,7 +4,6 @@ import com.fund.api.dto.Result;
 import com.fund.api.entity.BankCard;
 import com.fund.api.service.BankCardService;
 import com.fund.api.service.CardOrderService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +40,7 @@ public class BankCardController {
         if(bankCards == null || bankCards.size() == 0){
             return Result.fail("该用户未绑定任何银行卡");
         }
-        return Result.ok(bankCards, (long) bankCards.size());
+        return Result.ok(bankCards);
     }
 
     @GetMapping("/balance/{cardId}")
