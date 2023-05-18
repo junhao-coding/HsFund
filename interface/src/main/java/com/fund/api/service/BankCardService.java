@@ -18,7 +18,7 @@ public interface BankCardService {
 
     List<BankCard> getAllByClientId(int clientId);
 
-    String getBalance(String cardId);
+    BigDecimal getBalance(String cardId);
 
-    void updateBalance(String clientId, BigDecimal change);
+    void updateBalance(String cardId, BigDecimal change);
 }

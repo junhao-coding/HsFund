@@ -1,5 +1,6 @@
 package com.fund.client.mapper;
 
+import com.fund.api.dto.ClientDTO;
 import com.fund.api.entity.Client;
 import org.apache.ibatis.annotations.*;
 
@@ -52,4 +53,6 @@ public interface ClientMapper {
      */
     @Select("select client_id, client_name, client_type, card_type, card_number, sex, age, phone_number, risk_level, create_time from client")
     List<Client> getClientAll();
+
+    List<ClientDTO> getClientLikely(String keyword);
 }

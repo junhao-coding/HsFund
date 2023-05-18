@@ -1,6 +1,6 @@
 package com.fund.product.impl;
 
-import com.fund.api.dto.Result;
+import com.fund.api.dto.Page;
 import com.fund.api.entity.Product;
 import com.fund.api.service.ProductService;
 import com.fund.product.exception.ProductException;
@@ -11,6 +11,7 @@ import com.hundsun.jrescloud.rpc.annotation.CloudComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @CloudComponent
@@ -43,10 +44,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Result getProductByPage(Integer page, Integer pageSize) {
+    public Page<Product> getProductByPage(Integer page, Integer pageSize) {
         PageHelper.startPage(page, pageSize);
         List<Product> products = productMapper.getAllProduct();
         PageInfo<Product> productPageInfo = new PageInfo<>(products);
-        return Result.ok(products,productPageInfo.getTotal());
+        Page<Product> productPage = new Page<Product>();
+        productPage.setRecords(productPageInfo.getList());
+        productPage.setPages(productPageInfo.getPages());
+        productPage.setTotal(productPageInfo.getTotal());
+        return productPage;
+    }
+
+    @Override
+    public List<Map<String, Object>> getProductLikely(String s) {
+        List<Map<String, Object>> maps = productMapper.selectProductLikely(s);
+        return maps;
     }
 }

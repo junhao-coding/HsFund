@@ -1,5 +1,6 @@
 package com.fund.client.controller;
 
+import com.fund.api.dto.ClientDTO;
 import com.fund.api.dto.Page;
 import com.fund.api.dto.Result;
 import com.fund.api.entity.Client;
@@ -22,6 +23,12 @@ import java.util.List;
 public class ClientController {
     @Autowired
     private ClientService clientService;
+
+    @GetMapping("/likely")
+    public Result getClientLikely(String keyword){
+        List<ClientDTO> clientDTOS = clientService.selectClientLikely(keyword);
+        return Result.ok(clientDTOS);
+    }
 
     @GetMapping("/{id}")
     public Result getClientById(@PathVariable("id") int id){

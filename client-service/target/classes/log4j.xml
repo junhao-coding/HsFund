@@ -27,7 +27,7 @@
     </appenders>
 
     <loggers>
-        <AsyncLogger name="com.fund.client.impl" level="info" additivity="false">
+        <AsyncLogger name="com.fund.product.impl" level="info" additivity="false">
             <AppenderRef ref="AsyncAppLog" />
             <AppenderRef ref="AsyncCONSOLE" />
         </AsyncLogger>
