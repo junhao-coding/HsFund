@@ -1,5 +1,6 @@
 package com.fund.client.impl;
 
+import com.fund.api.dto.ClientDTO;
 import com.fund.api.dto.Page;
 import com.fund.api.entity.Client;
 import com.fund.api.service.ClientService;
@@ -57,5 +58,11 @@ public class ClientServiceImpl implements ClientService {
         List<Client> clientList = clientMapper.getClientAll();
         PageInfo<Client> clientPageInfo = new PageInfo<>(clientList);
         return new Page<>(clientList, clientPageInfo.getTotal(), clientPageInfo.getPages());
+    }
+
+    @Override
+    public List<ClientDTO> selectClientLikely(String keyword) {
+        List<ClientDTO> clientLikely = clientMapper.getClientLikely(keyword);
+        return clientLikely;
     }
 }

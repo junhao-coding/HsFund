@@ -1,10 +1,12 @@
 package com.fund.api.service;
 
-import com.fund.api.dto.Result;
+
+import com.fund.api.dto.Page;
 import com.fund.api.entity.Product;
 import com.hundsun.jrescloud.rpc.annotation.CloudService;
 
-
+import java.util.List;
+import java.util.Map;
 
 
 @CloudService
@@ -18,9 +20,9 @@ public interface ProductService {
 
     void deleteProductById(String id);
 
-    Result getProductByPage(Integer page,Integer pageSize);
+     Page<Product> getProductByPage(Integer page, Integer pageSize);
 
-
+    List<Map<String,Object>> getProductLikely(String s);
 
 
 }

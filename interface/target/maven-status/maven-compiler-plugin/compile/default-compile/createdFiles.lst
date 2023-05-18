@@ -1,6 +1,6 @@
 com\fund\api\dto\Result.class
-com\fund\api\service\TestService.class
-com\fund\api\entity\Product.class
 com\fund\api\service\ProductService.class
 com\fund\api\service\ClientService.class
 com\fund\api\entity\Client.class
+com\fund\api\service\TestService.class
+com\fund\api\entity\Product.class

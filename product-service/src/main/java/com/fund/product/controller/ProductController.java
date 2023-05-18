@@ -1,10 +1,14 @@
 package com.fund.product.controller;
 
+import com.fund.api.dto.Page;
 import com.fund.api.dto.Result;
 import com.fund.api.entity.Product;
 import com.fund.api.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/fund")
@@ -39,7 +43,14 @@ public class ProductController {
 
     @GetMapping("/product/page")
     public Result getProductByPage(Integer pageNum,Integer pageSize){
-        return productService.getProductByPage(pageNum,pageSize);
+        Page<Product> productByPage = productService.getProductByPage(pageNum, pageSize);
+        return Result.ok(productByPage);
+    }
+
+    @GetMapping("/product/likely")
+    public Result getProductLikely(String keyword){
+        List<Map<String, Object>> maps = productService.getProductLikely(keyword);
+        return Result.ok(maps);
     }
 
 }

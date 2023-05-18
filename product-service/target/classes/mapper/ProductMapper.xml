@@ -33,4 +33,13 @@
     <select id="getAllProduct" resultType="com.fund.api.entity.Product">
         select <include refid="productCols"/> from product
     </select>
+
+    <select id="selectProductLikely" resultType="map">
+        select product_id ,product_name,risk_level  from product where product_id like '%${option}%'
+                                                         or product_name like  '%${option}%'
+                                                         order by product_id
+                                                         limit 0,20
+    </select>
+
+
 </mapper>

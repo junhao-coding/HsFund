@@ -31,9 +31,9 @@ public class BankCardServiceImpl implements BankCardService {
     }
 
     @Override
-    public String getBalance(String cardId) {
+    public BigDecimal getBalance(String cardId) {
         //将bigDecimal转为字符串类型返回给前端
-        return bankCardMapper.getBalance(cardId).stripTrailingZeros().toPlainString();
+        return bankCardMapper.getBalance(cardId);
     }
 
     @Override

@@ -1,5 +1,8 @@
 package com.fund.api.dto;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 /**
@@ -8,6 +11,8 @@ import java.util.List;
  * @Description: <br/>
  * @date 2023/05/12  21:21
  */
+@Data
+@NoArgsConstructor
 public class Page<T> {
     private List<T> records;
     private long total;
