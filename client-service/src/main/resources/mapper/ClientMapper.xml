@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fund.client.mapper.ClientMapper">
+    <resultMap id="clientInfo" type="com.fund.api.dto.ClientDTO">
+        <id property="clientId" column="client_id"/>
+        <result property="clientName" column="client_name"/>
+        <result property="clientType" column="client_type"/>
+        <result property="cardType" column="card_type"/>
+        <result property="cardNumber" column="card_number"/>
+        <result property="sex" column="sex"/>
+        <result property="age" column="age"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="riskLevel" column="risk_level"/>
+        <result property="createTime" column="create_time"/>
+        <collection property="bankCardList" ofType="com.fund.api.entity.BankCard">
+            <id property="cardId" column="card_id"/>
+            <result property="clientId" column="client_id"/>
+            <result property="balance" column="balance"/>
+        </collection>
+    </resultMap>
+    <select id="getClientLikely" resultMap="clientInfo">
+        select * from client c join bank_card b on c.client_id=b.client_id
+                 where c.client_id like '%${keyword}%' or c.client_name like '%${keyword}%'
+                 order by c.client_id
+                 limit 0,20
+    </select>
+</mapper>

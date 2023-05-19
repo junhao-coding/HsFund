@@ -21,8 +21,9 @@
                 #{productAdmin},#{productManager},#{productCustodian})
     </insert>
     <update id="updateProduct">
-        update product set net_worth=#{netWorth},net_worth_old=#{netWorthOld},portion=#{portion},
-                           purchase_state=#{purchaseState},sell_state=#{sellState}
+        update product set product_name=#{productName}, net_worth=#{netWorth},net_worth_old=#{netWorthOld},portion=#{portion},
+                           product_type=#{productType},risk_level=#{riskLevel},product_admin=#{productAdmin},product_manager=#{productManager},
+                           product_custodian=#{productCustodian},purchase_state=#{purchaseState},sell_state=#{sellState}
                         where product_id=#{productId}
     </update>
 

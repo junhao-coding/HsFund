@@ -41,7 +41,7 @@ public class BankCardController {
         if(bankCards == null || bankCards.size() == 0){
             return Result.fail("该用户未绑定任何银行卡");
         }
-        return Result.ok(bankCards, (long) bankCards.size());
+        return Result.ok(bankCards);
     }
 
     @GetMapping("/balance/{cardId}")
