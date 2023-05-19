@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fund.business.mapper.BusinessMapper">
+    <insert id="insertPurchaseFund">
+        insert into business(business_id,client_id,product_id,trade_type,card_id,trade_amount,expected_day)
+                    values(#{businessId},#{clientId},#{productId},#{tradeType},#{cardId},#{tradeAmount},#{expectedDay})
+    </insert>
+</mapper>
