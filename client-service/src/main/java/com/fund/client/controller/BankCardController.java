@@ -3,7 +3,6 @@ package com.fund.client.controller;
 import com.fund.api.dto.Result;
 import com.fund.api.entity.BankCard;
 import com.fund.api.service.BankCardService;
-import com.fund.api.service.CardOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +22,6 @@ import java.util.List;
 public class BankCardController {
     @Autowired
     private BankCardService bankCardService;
-
-    @Autowired
-    private CardOrderService cardOrderService;
-
 
     @PostMapping
     public Result addBankCard(@RequestBody @Valid BankCard bankCard){
@@ -50,9 +45,8 @@ public class BankCardController {
     @PutMapping
     @Transactional
     public Result updateBalance(@RequestParam(value = "cardId") String cardId,
-                                @RequestParam(value = "change" , defaultValue = "0") String change){
-        bankCardService.updateBalance(cardId, new BigDecimal(change));
-        cardOrderService.addCardOrder(cardId, new BigDecimal(change));
+                                @RequestParam(value = "change" , defaultValue = "0") BigDecimal change){
+        bankCardService.updateBalance(cardId, change);
         return Result.ok();
     }
 
@@ -60,7 +54,7 @@ public class BankCardController {
     public Result getOrdersByPositionId(@RequestParam("year") int year,
                                         @RequestParam("month") int month,
                                         @RequestParam("cardId") long cardId){
-        List<String> cardOrders = cardOrderService.getOrdersByCardId(year, month, cardId);
+        List<String> cardOrders = bankCardService.getOrdersByCardId(year, month, cardId);
         return Result.ok(cardOrders);
     }
 }

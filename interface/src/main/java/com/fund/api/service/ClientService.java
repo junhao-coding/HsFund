@@ -16,7 +16,7 @@ import java.util.Map;
  */
 @CloudService(validation = true)
 public interface ClientService {
-    void addClient(Client client);
+    int addClient(Client client);
 
     void updateClient(Client client);
 
@@ -24,12 +24,10 @@ public interface ClientService {
 
     Client selectClientById(int id);
 
-    List<String> selectClientByLikeName(String likeName);
-
     Page<Client> selectClientByPage(int pageNum, int pageSize);
 
     /**
-     * 通过客户代号或姓名模糊搜索客户信息包括所持有的所有银行卡信息
+     *  通过客户代号或姓名模糊搜索客户信息包括所持有的所有银行卡信息
      * @param keyword
      * @return
      */

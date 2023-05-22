@@ -1,5 +1,6 @@
 package com.fund.product.impl;
 
+import com.fund.api.dto.NetWorthDto;
 import com.fund.api.dto.Page;
 import com.fund.api.entity.Product;
 import com.fund.api.service.ProductService;
@@ -59,5 +60,20 @@ public class ProductServiceImpl implements ProductService {
     public List<Map<String, Object>> getProductLikely(String s) {
         List<Map<String, Object>> maps = productMapper.selectProductLikely(s);
         return maps;
+    }
+
+    @Override
+    public List<NetWorthDto> getNetWorthDto(){
+        return productMapper.getNetWorthDto();
+    }
+
+    @Override
+    public void updateNetWorthBatch(List<NetWorthDto> list) {
+        productMapper.updateNetWorthBatch(list);
+    }
+
+    @Override
+    public void updateNetWorthOld() {
+        productMapper.updateNetWorthOld();
     }
 }

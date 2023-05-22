@@ -7,6 +7,7 @@ import com.fund.api.service.ClientService;
 import com.fund.client.mapper.ClientMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.hundsun.jrescloud.rpc.annotation.CloudComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import java.util.List;
  * @Description: <br/>
  * @date 2023/05/11  16:31
  */
-@Component
+@CloudComponent
 public class ClientServiceImpl implements ClientService {
     private static final Logger logger = LoggerFactory.getLogger(ClientServiceImpl.class);
 
@@ -28,8 +29,8 @@ public class ClientServiceImpl implements ClientService {
     private ClientMapper clientMapper;
 
     @Override
-    public void addClient(Client client) {
-        clientMapper.addClient(client);
+    public int addClient(Client client) {
+        return clientMapper.addClient(client);
     }
 
     @Override
@@ -45,11 +46,6 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client selectClientById(int id) {
         return clientMapper.getClientById(id);
-    }
-
-    @Override
-    public List<String> selectClientByLikeName(String likeName) {
-        return clientMapper.getClientByLikeName(likeName);
     }
 
     @Override

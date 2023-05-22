@@ -18,9 +18,7 @@ public interface ClientMapper {
     /**
      * @param client 前端提交的关于客户的表单信息
      */
-    @Insert("insert into client(client_name, client_type, card_type, card_number, sex, age, phone_number, risk_level)" +
-            "values(#{clientName}, #{clientType}, #{cardType}, #{cardNumber}, #{sex}, #{age}, #{phoneNumber}, #{riskLevel})")
-    void addClient(Client client);
+    int addClient(Client client);
 
     /**
      * @param client 前端提交的对客户信息修改的表单信息
@@ -44,9 +42,6 @@ public interface ClientMapper {
     @Select("select client_id, client_name, client_type, card_type, card_number, sex, age, phone_number, risk_level, create_time " +
             "from client where client_id = #{id}")
     Client getClientById(@Param("id") int id);
-
-    @Select("select client_name from client where client_name like #{likeName}")
-    List<String> getClientByLikeName(String likeName);
 
     /**
      * @return  返回查询的所有客户对象，注意要使用分页插件。

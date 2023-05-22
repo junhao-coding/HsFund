@@ -3,7 +3,9 @@ package com.fund.client.controller;
 import com.fund.api.dto.ClientDTO;
 import com.fund.api.dto.Page;
 import com.fund.api.dto.Result;
+import com.fund.api.entity.BankCard;
 import com.fund.api.entity.Client;
+import com.fund.api.service.BankCardService;
 import com.fund.api.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,8 @@ import java.util.List;
 public class ClientController {
     @Autowired
     private ClientService clientService;
+    @Autowired
+    private BankCardService bankCardService;
 
     @GetMapping("/likely")
     public Result getClientLikely(String keyword){
@@ -39,20 +43,18 @@ public class ClientController {
         return Result.ok(client);
     }
 
-    @GetMapping
-    public Result getNameLikely(@RequestParam("name") String name){
-        String likeName = name + "%";
-        List<String> nameList = clientService.selectClientByLikeName(likeName);
-        return Result.ok(nameList);
-    }
-
     @PostMapping()
-    public Result addClient(@RequestBody @Valid Client client){
-        List<String> nameList = clientService.selectClientByLikeName(client.getClientName());
-        if(nameList.size() != 0){
-            return Result.fail("用户名已存在");
+    public Result addClient(@RequestBody ClientDTO clientDto){
+        int clientId = clientService.addClient(clientDto);
+        List<BankCard> bankCardList = clientDto.getBankCardList();
+        if(bankCardList == null ||bankCardList.size() == 0){
+            return Result.fail("请至少录入一张银行卡");
         }
-        clientService.addClient(client);
+        //为每张银行卡绑定开户客户
+        for (BankCard card : bankCardList){
+            card.setClientId(clientId);
+            bankCardService.addBankCard(card);
+        }
         return Result.ok();
     }
     @PutMapping()

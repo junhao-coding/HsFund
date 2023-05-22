@@ -12,7 +12,7 @@ import java.util.List;
  * @Description: <br/>
  * @date 2023/05/12  14:18
  */
-@CloudService
+@CloudService(validation = true)
 public interface BankCardService {
     void addBankCard(BankCard bankCard);
 
@@ -21,4 +21,8 @@ public interface BankCardService {
     BigDecimal getBalance(String cardId);
 
     void updateBalance(String cardId, BigDecimal change);
+
+    void addCardOrder(String cardId, BigDecimal orderAmount);
+
+    List<String> getOrdersByCardId(int year, int month, long cardId);
 }

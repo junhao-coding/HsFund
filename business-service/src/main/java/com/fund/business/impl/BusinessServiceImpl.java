@@ -3,7 +3,6 @@ package com.fund.business.impl;
 import com.fund.api.entity.Business;
 import com.fund.api.service.BankCardService;
 import com.fund.api.service.BusinessService;
-import com.fund.api.service.CardOrderService;
 import com.fund.api.util.BusinessIdGenerator;
 import com.fund.api.util.ExceptedDayGenerator;
 import com.fund.business.exception.BalanceNotEnoughException;
@@ -14,20 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Random;
 
 @CloudComponent
 public class BusinessServiceImpl implements BusinessService {
 
     @CloudReference
     private BankCardService bankCardService;
-
-    @CloudReference
-    private CardOrderService cardOrderService;
 
     @Autowired
     private BusinessMapper businessMapper;
@@ -46,7 +37,7 @@ public class BusinessServiceImpl implements BusinessService {
         //修改银行卡余额
         bankCardService.updateBalance(cardId,amount.negate());
         //流水表记录
-        cardOrderService.addCardOrder(cardId,amount.negate());
+        bankCardService.addCardOrder(cardId,amount.negate());
         businessMapper.insertPurchaseFund(business);
     }
 

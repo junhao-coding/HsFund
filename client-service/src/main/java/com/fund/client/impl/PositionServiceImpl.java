@@ -8,6 +8,7 @@ import com.fund.client.mapper.PositionMapper;
 import com.fund.client.mapper.PositionOrderMapper;
 import com.hundsun.jrescloud.rpc.annotation.CloudComponent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -29,6 +30,7 @@ public class PositionServiceImpl implements PositionService {
 
 
     @Override
+    @Transactional
     public void addPosition(ClientPosition position) {
         //雪花算法生成ID
         SnowflakeIdGenerator idGenerator = new SnowflakeIdGenerator(1, 1);
@@ -44,6 +46,7 @@ public class PositionServiceImpl implements PositionService {
     }
 
     @Override
+    @Transactional
     public void updatePosition(long positionId, BigDecimal changePosition) {
         SnowflakeIdGenerator idGenerator = new SnowflakeIdGenerator(1, 1);
         //更新持仓表

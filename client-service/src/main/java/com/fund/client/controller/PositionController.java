@@ -33,8 +33,8 @@ public class PositionController {
     @PutMapping
     @Transactional
     public Result updatePosition(@RequestParam("positionId") long positionId,
-                                 @RequestParam("changePosition") String changePosition){
-        positionService.updatePosition(positionId, new BigDecimal(changePosition));
+                                 @RequestParam("changePosition") BigDecimal changePosition){
+        positionService.updatePosition(positionId, changePosition);
         return Result.ok();
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
  * @Description: <br/>
  * @date 2023/05/12  16:23
  */
-@CloudService
+@CloudService(validation = true)
 public interface PositionService {
     void addPosition(ClientPosition position);
 

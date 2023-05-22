@@ -27,4 +27,12 @@
                  order by c.client_id
                  limit 0,20
     </select>
+
+    <insert id="addClient" >
+        <selectKey resultType="integer" order="AFTER" keyColumn="client_id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into client (client_name, client_type, card_type, card_number, sex, age, phone_number, risk_level)
+        values  (#{clientName}, #{clientType}, #{cardType}, #{cardNumber}, #{sex}, #{age}, #{phoneNumber}, #{riskLevel})
+    </insert>
 </mapper>

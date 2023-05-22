@@ -26,6 +26,14 @@
                            product_custodian=#{productCustodian},purchase_state=#{purchaseState},sell_state=#{sellState}
                         where product_id=#{productId}
     </update>
+    <update id="updateNetWorthBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update product set net_worth=#{item.netWorth}
+            <where>
+                product_id = #{item.productId}
+            </where>
+        </foreach>
+    </update>
 
     <delete id="deleteProductById">
         delete from product where product_id=#{id}
@@ -41,6 +49,7 @@
                                                          order by product_id
                                                          limit 0,20
     </select>
-
-
+    <select id="getNetWorthDto" resultType="com.fund.api.dto.NetWorthDto">
+        select product_id, net_worth, portion from product
+    </select>
 </mapper>
