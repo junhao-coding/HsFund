@@ -21,4 +21,6 @@ public interface PositionService {
     List<ClientPosition> getPositionsByClientId(int clientId);
 
     List<String> getOrdersByPositionId(int year, int month, long positionId);
+
+    Long getPositionId(String productId, int clientId, String cardId);
 }

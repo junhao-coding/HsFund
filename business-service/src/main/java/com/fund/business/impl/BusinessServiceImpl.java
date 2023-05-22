@@ -1,5 +1,6 @@
 package com.fund.business.impl;
 
+import com.fund.api.dto.BusinessDto;
 import com.fund.api.entity.Business;
 import com.fund.api.service.BankCardService;
 import com.fund.api.service.BusinessService;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 
 @CloudComponent
 public class BusinessServiceImpl implements BusinessService {
@@ -36,9 +39,16 @@ public class BusinessServiceImpl implements BusinessService {
         if(amount.compareTo(balance)>0) throw new BalanceNotEnoughException("银行卡余额不足");
         //修改银行卡余额
         bankCardService.updateBalance(cardId,amount.negate());
-        //流水表记录
-        bankCardService.addCardOrder(cardId,amount.negate());
         businessMapper.insertPurchaseFund(business);
     }
 
+    @Override
+    public List<BusinessDto> getBusinessConfirmed(LocalDate date) {
+        return businessMapper.selectBusinessConfirmed(date);
+    }
+
+    @Override
+    public void confirmBusiness(LocalDate date) {
+        businessMapper.confirmBusiness(date);
+    }
 }

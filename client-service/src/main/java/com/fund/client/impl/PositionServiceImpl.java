@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -28,21 +29,16 @@ public class PositionServiceImpl implements PositionService {
     @Autowired
     private PositionOrderMapper positionOrderMapper;
 
+    private  SnowflakeIdGenerator idGenerator = new SnowflakeIdGenerator(1, 1);
 
     @Override
     @Transactional
     public void addPosition(ClientPosition position) {
-        //雪花算法生成ID
-        SnowflakeIdGenerator idGenerator = new SnowflakeIdGenerator(1, 1);
-        //插入客户持仓表
+        //雪花算法生成ID, 插入客户持仓表
         position.setPositionId(idGenerator.nextId());
         positionMapper.addPosition(position);
         //插入持仓流水表
-        PositionOrder positionOrder = new PositionOrder();
-        positionOrder.setPositionOrderId(idGenerator.nextId());
-        positionOrder.setPortion(position.getPortion());
-        positionOrder.setPositionId(position.getPositionId());
-        positionOrderMapper.addPositionOrder(positionOrder);
+        addPositionOrder(position.getPositionId(), position.getPortion());
     }
 
     @Override
@@ -50,8 +46,11 @@ public class PositionServiceImpl implements PositionService {
     public void updatePosition(long positionId, BigDecimal changePosition) {
         SnowflakeIdGenerator idGenerator = new SnowflakeIdGenerator(1, 1);
         //更新持仓表
-        positionMapper.updatePosition(positionId, changePosition);
+        positionMapper.updatePosition(positionId, changePosition.setScale(4, RoundingMode.HALF_UP));
         //插入持仓流水表
+        addPositionOrder(positionId, changePosition.setScale(4, RoundingMode.HALF_UP));
+    }
+    private void addPositionOrder(long positionId, BigDecimal changePosition){
         PositionOrder positionOrder = new PositionOrder();
         positionOrder.setPositionOrderId(idGenerator.nextId());
         positionOrder.setPortion(changePosition);
@@ -68,5 +67,10 @@ public class PositionServiceImpl implements PositionService {
     public List<String> getOrdersByPositionId(int year, int month, long positionId) {
         List<BigDecimal> orderList = positionOrderMapper.getOrdersByPositionId(year, month, positionId);
         return orderList.stream().map((position) -> position.stripTrailingZeros().toPlainString()).collect(toList());
+    }
+
+    @Override
+    public Long getPositionId(String productId, int clientId, String cardId) {
+        return positionMapper.selectPositionId(productId, clientId, cardId);
     }
 }

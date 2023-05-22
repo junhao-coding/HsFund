@@ -22,7 +22,5 @@ public interface BankCardService {
 
     void updateBalance(String cardId, BigDecimal change);
 
-    void addCardOrder(String cardId, BigDecimal orderAmount);
-
     List<String> getOrdersByCardId(int year, int month, long cardId);
 }

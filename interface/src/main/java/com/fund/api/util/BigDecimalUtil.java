@@ -5,10 +5,35 @@ import java.math.RoundingMode;
 
 public abstract class BigDecimalUtil {
     private static final int DEF_DIV_SCALE = 4;
-    private static final int BALANCE_SCALE = 2;
 
     /**
-     * 乘
+     * 加法
+     */
+
+    public static BigDecimal add(BigDecimal v1, BigDecimal v2) {
+        if (v1 == null) {
+            v1 = BigDecimal.ZERO;
+        }
+
+        if (v2 == null) {
+            v2 = BigDecimal.ZERO;
+        }
+        return v1.add(v2);
+    }
+
+    public static BigDecimal sub(BigDecimal v1, BigDecimal v2) {
+        if (v1 == null) {
+            v1 = BigDecimal.ZERO;
+        }
+
+        if (v2 == null) {
+            v2 = BigDecimal.ZERO;
+        }
+        return v1.subtract(v2);
+    }
+
+    /**
+     * 乘法
      */
     public static BigDecimal mul(BigDecimal v1, BigDecimal v2) {
         if (v1 == null) {
@@ -36,7 +61,7 @@ public abstract class BigDecimalUtil {
     }
 
 
-    public static BigDecimal div(BigDecimal v1, BigDecimal v2, int scale) {
+    private static BigDecimal div(BigDecimal v1, BigDecimal v2, int scale) {
         if (scale < 0) {
             throw new IllegalArgumentException(
                     "The scale must be a positive integer or zero");

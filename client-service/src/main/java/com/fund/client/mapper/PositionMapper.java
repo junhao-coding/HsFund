@@ -25,4 +25,12 @@ public interface PositionMapper {
     @Select("select product_id, card_id, risk_mismatch, portion, create_time, update_time from client_position " +
             "where client_id = #{clientId}")
     List<ClientPosition> getPositionsByClientId(@Param("clientId") int clientId);
+
+    @Select("select position_id from client_position " +
+            "where product_id = #{productId} " +
+            "and client_id = #{clientId} " +
+            "and card_id = #{cardId}")
+    Long selectPositionId(@Param("productId") String productId,
+                          @Param("clientId") int clientId,
+                          @Param("cardId") String cardId);
 }

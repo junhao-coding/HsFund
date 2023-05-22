@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2023/05/19  17:27
  */
 @RestController
-@RequestMapping("/fund/liquidation")
+@RequestMapping("/fund/liquidate")
 public class LiquidationController {
     @Autowired
     private LiquidationService liquidationService;
@@ -49,6 +49,7 @@ public class LiquidationController {
 
     @PutMapping("/confirm")
     public Result businessConfirm(){
+        liquidationService.businessConfirm();
         return Result.ok();
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,19 +40,17 @@ public class BankCardServiceImpl implements BankCardService {
 
     @Override
     public BigDecimal getBalance(String cardId) {
-        //将bigDecimal转为字符串类型返回给前端
         return bankCardMapper.getBalance(cardId);
     }
 
     @Override
     @Transactional
     public void updateBalance(String cardId, BigDecimal change) {
-        bankCardMapper.updateBalance(cardId, change);
-        addCardOrder(cardId, change);
+        bankCardMapper.updateBalance(cardId, change.setScale(2, RoundingMode.HALF_UP));
+        addCardOrder(cardId, change.setScale(2, RoundingMode.HALF_UP));
     }
 
-    @Override
-    public void addCardOrder(String cardId, BigDecimal orderAmount) {
+    private void addCardOrder(String cardId, BigDecimal orderAmount) {
         CardOrder cardOrder = new CardOrder();
         cardOrder.setCardId(cardId);
         cardOrder.setOrderAmount(orderAmount);

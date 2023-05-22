@@ -47,7 +47,7 @@ public class ClientController {
     public Result addClient(@RequestBody ClientDTO clientDto){
         int clientId = clientService.addClient(clientDto);
         List<BankCard> bankCardList = clientDto.getBankCardList();
-        if(bankCardList == null ||bankCardList.size() == 0){
+        if(bankCardList == null || bankCardList.size() == 0){
             return Result.fail("请至少录入一张银行卡");
         }
         //为每张银行卡绑定开户客户

@@ -12,6 +12,7 @@ import java.util.List;
  * @Description: <br/>
  * @date 2023/05/21  10:18
  */
+@CloudService
 public interface LiquidationService {
     void addLiquidation(String productId, BigDecimal netWorthPer);
 
@@ -20,5 +21,12 @@ public interface LiquidationService {
      */
     List<BigDecimal> selectAllByProductId(String productId);
 
+    /**
+     * 行情更新
+     */
     void marketUpdate();
+    /**
+     * 交易确认
+     */
+    void businessConfirm();
 }
