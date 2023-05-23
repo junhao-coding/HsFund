@@ -1,6 +1,7 @@
 package com.fund.client.impl;
 
 import com.fund.api.dto.ClientDTO;
+import com.fund.api.dto.ClientProductDTO;
 import com.fund.api.dto.Page;
 import com.fund.api.entity.Client;
 import com.fund.api.service.ClientService;
@@ -29,8 +30,8 @@ public class ClientServiceImpl implements ClientService {
     private ClientMapper clientMapper;
 
     @Override
-    public int addClient(Client client) {
-        return clientMapper.addClient(client);
+    public void addClient(Client client) {
+        clientMapper.addClient(client);
     }
 
     @Override
@@ -60,5 +61,11 @@ public class ClientServiceImpl implements ClientService {
     public List<ClientDTO> selectClientLikely(String keyword) {
         List<ClientDTO> clientLikely = clientMapper.getClientLikely(keyword);
         return clientLikely;
+    }
+
+    @Override
+    public List<ClientProductDTO> selectClientProductLikely(String keyword) {
+        List<ClientProductDTO> clientProductLikely = clientMapper.getClientProductLikely(keyword);
+        return clientProductLikely;
     }
 }

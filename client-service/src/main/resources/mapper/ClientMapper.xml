@@ -21,11 +21,36 @@
             <result property="balance" column="balance"/>
         </collection>
     </resultMap>
+    <resultMap id="clientProductInfo" type="com.fund.api.dto.ClientProductDTO">
+        <id property="clientId" column="client_id"/>
+        <result property="clientName" column="client_name"/>
+        <result property="clientType" column="client_type"/>
+        <result property="cardType" column="card_type"/>
+        <result property="cardNumber" column="card_number"/>
+        <result property="sex" column="sex"/>
+        <result property="age" column="age"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="riskLevel" column="risk_level"/>
+        <result property="createTime" column="create_time"/>
+        <collection property="productList" ofType="com.fund.api.entity.Product">
+            <id property="productId" column="product_id"/>
+            <result property="productName" column="product_name"/>
+        </collection>
+    </resultMap>
     <select id="getClientLikely" resultMap="clientInfo">
         select * from client c join bank_card b on c.client_id=b.client_id
                  where c.client_id like '%${keyword}%' or c.client_name like '%${keyword}%'
                  order by c.client_id
                  limit 0,20
+    </select>
+
+    <select id="getClientProductLikely" resultMap="clientProductInfo">
+        select a.*,c.product_name,c.product_id from client a
+                                                        join client_position b on a.client_id=b.client_id
+                                                        join product c on b.product_id=c.product_id
+        where a.client_id like '${keyword}%' or a.client_name like '${keyword}%'
+        order by a.client_id
+            limit 0,20
     </select>
 
     <insert id="addClient" >

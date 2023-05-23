@@ -4,11 +4,11 @@ import com.fund.api.dto.Result;
 import com.fund.api.service.LiquidationService;
 import com.fund.api.util.SystemDateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author JunHao Yu
@@ -32,7 +32,7 @@ public class LiquidationController {
         return Result.ok(SystemDateUtil.current());
     }
 
-    @GetMapping("/{productId}")
+    @GetMapping("/netWorthPer/{productId}")
     public Result getAllByProductId(@PathVariable String productId){
         List<BigDecimal> worthList = liquidationService.selectAllByProductId(productId);
         if(worthList == null || worthList.size() == 0){
@@ -49,7 +49,11 @@ public class LiquidationController {
 
     @PutMapping("/confirm")
     public Result businessConfirm(){
-        liquidationService.businessConfirm();
-        return Result.ok();
+        CompletableFuture<String> futureConfirm = new CompletableFuture<>();
+        new Thread(() -> {
+            String description = liquidationService.businessConfirm();
+            futureConfirm.complete(description);
+        }).start();
+        return Result.ok(futureConfirm);
     }
 }

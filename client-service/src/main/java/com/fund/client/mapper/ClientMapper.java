@@ -1,6 +1,7 @@
 package com.fund.client.mapper;
 
 import com.fund.api.dto.ClientDTO;
+import com.fund.api.dto.ClientProductDTO;
 import com.fund.api.entity.Client;
 import org.apache.ibatis.annotations.*;
 
@@ -18,7 +19,7 @@ public interface ClientMapper {
     /**
      * @param client 前端提交的关于客户的表单信息
      */
-    int addClient(Client client);
+    void addClient(Client client);
 
     /**
      * @param client 前端提交的对客户信息修改的表单信息
@@ -50,4 +51,6 @@ public interface ClientMapper {
     List<Client> getClientAll();
 
     List<ClientDTO> getClientLikely(String keyword);
+
+    List<ClientProductDTO> getClientProductLikely(String keyword);
 }

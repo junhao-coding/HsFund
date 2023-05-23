@@ -33,4 +33,10 @@ public interface PositionMapper {
     Long selectPositionId(@Param("productId") String productId,
                           @Param("clientId") int clientId,
                           @Param("cardId") String cardId);
+
+    @Select("select card_id,portion from client_position where client_id=#{clientId} and product_id=#{productId}")
+    List<ClientPosition> getPositionPortion(@Param("clientId") Integer clientId,@Param("productId") String productId);
+
+    @Select("select portion from client_position where product_id=#{productId} and client_id=#{clientId} and card_id=#{cardId}")
+    BigDecimal getTradePortion(@Param("clientId") Integer clientId, @Param("productId") String productId,@Param("cardId") String cardId);
 }

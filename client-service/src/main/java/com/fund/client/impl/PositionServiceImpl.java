@@ -14,8 +14,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 /**
  * @author JunHao Yu
  * @version 1.0
@@ -64,13 +62,24 @@ public class PositionServiceImpl implements PositionService {
     }
 
     @Override
-    public List<String> getOrdersByPositionId(int year, int month, long positionId) {
+    public List<BigDecimal> getOrdersByPositionId(int year, int month, long positionId) {
         List<BigDecimal> orderList = positionOrderMapper.getOrdersByPositionId(year, month, positionId);
-        return orderList.stream().map((position) -> position.stripTrailingZeros().toPlainString()).collect(toList());
+        return orderList;
     }
 
     @Override
     public Long getPositionId(String productId, int clientId, String cardId) {
         return positionMapper.selectPositionId(productId, clientId, cardId);
+    }
+
+    @Override
+    public List<ClientPosition> getPositionPortion(Integer clientId, String productId) {
+        List<ClientPosition> positionPortion = positionMapper.getPositionPortion(clientId, productId);
+        return positionPortion;
+    }
+
+    @Override
+    public BigDecimal getTradePortion(Integer clientId, String productId, String cardId) {
+        return positionMapper.getTradePortion(clientId, productId, cardId);
     }
 }

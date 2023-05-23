@@ -51,7 +51,7 @@ public class PositionController {
     public Result getOrdersByPositionId(@RequestParam("year") int year,
                                         @RequestParam("month") int month,
                                         @RequestParam("positionId") long positionId){
-        List<String> positionOrders = positionService.getOrdersByPositionId(year, month, positionId);
+        List<BigDecimal> positionOrders = positionService.getOrdersByPositionId(year, month, positionId);
         return Result.ok(positionOrders);
     }
 }

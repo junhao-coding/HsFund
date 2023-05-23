@@ -7,4 +7,50 @@
         insert into business(business_id,client_id,product_id,trade_type,card_id,trade_amount,expected_day)
                     values(#{businessId},#{clientId},#{productId},#{tradeType},#{cardId},#{tradeAmount},#{expectedDay})
     </insert>
+    <insert id="insertSellFund">
+        insert into business(business_id,client_id,product_id,trade_type,card_id,trade_portion,expected_day)
+        values(#{businessId},#{clientId},#{productId},#{tradeType},#{cardId},#{tradePortion},#{expectedDay})
+    </insert>
+    <select id="getApplySellPortion" resultType="decimal">
+        select sum(trade_portion) from business
+        <where>
+            <if test="clientId!=null">
+                client_id = #{clientId}
+            </if>
+            <if test="productId!=null">
+                and product_id = #{productId}
+            </if>
+            <if test="cardId != null">
+                and card_id = #{cardId}
+            </if>
+            and is_confirmed=0 and trade_type='赎回'
+        </where>
+    </select>
+    <select id="getAllBusiness" resultType="com.fund.api.dto.BusinessDTO">
+        select a.business_id, a.trade_type, a.card_id, a.trade_portion, a.trade_amount,a.is_confirmed, a.is_withdrawn,a.create_time,
+        b.product_name, c.client_name
+        from business a
+        join product b on a.product_id=b.product_id
+        join client c on a.client_id=c.client_id
+        <where>
+            <if test="clientName!=null">
+                c.client_name like '${clientName}%'
+            </if>
+            <if test="productName!=null">
+                and b.product_name like '${productName}%'
+            </if>
+            <if test="tradeType!=null">
+                and a.trade_type = #{tradeType}
+            </if>
+        </where>
+        order by a.create_time desc
+    </select>
+    <update id="withdrawBusiness">
+        update business set is_withdrawn=1 where business_id=#{businessId}
+    </update>
+    <select id="getBusinessByBusinessId" resultType="com.fund.api.entity.Business">
+        select business_id,client_id,product_id,trade_type,card_id,
+               trade_portion,trade_amount,expected_day,is_confirmed,is_withdrawn
+        from business where business_id=#{businessId}
+    </select>
 </mapper>

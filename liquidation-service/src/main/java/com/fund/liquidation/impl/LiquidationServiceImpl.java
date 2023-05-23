@@ -1,7 +1,7 @@
 package com.fund.liquidation.impl;
 
-import com.fund.api.dto.BusinessDto;
 import com.fund.api.dto.NetWorthDto;
+import com.fund.api.entity.Business;
 import com.fund.api.entity.ClientPosition;
 import com.fund.api.entity.Liquidation;
 import com.fund.api.entity.Product;
@@ -85,26 +85,32 @@ public class LiquidationServiceImpl implements LiquidationService {
      */
     @Transactional
     @Override
-    public void businessConfirm() {
-        List<BusinessDto> confirmedList = businessService.getBusinessConfirmed(SystemDateUtil.current());
+    public String businessConfirm() {
+        List<Business> confirmedList = businessService.getBusinessConfirmed(SystemDateUtil.current());
         //没有任何交易直接退出
         if(confirmedList == null || confirmedList.size() == 0){
-            return;
+            return "昨天没有产生任何交易";
         }
-        for(BusinessDto businessDto : confirmedList){
-            if(businessDto.getTradeType().equals("申购")){
-                purchaseConfirm(businessDto);
+        try {
+            for(Business business : confirmedList){
+                if(business.getTradeType().equals("申购")){
+                    purchaseConfirm(business);
+                }
+                if(business.getTradeType().equals("赎回")){
+                    redeemConfirm(business);
+                }
             }
-            if(businessDto.getTradeType().equals("赎回")){
-                redeemConfirm(businessDto);
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "交易确认发生错误";
         }
         businessService.confirmBusiness(SystemDateUtil.current());
+        return "所有交易全部确认完成";
     }
 
-    private void purchaseConfirm(BusinessDto businessDto){
-        BigDecimal tradeAmount = businessDto.getTradeAmount();
-        String productId = businessDto.getProductId();
+    private void purchaseConfirm(Business business){
+        BigDecimal tradeAmount = business.getTradeAmount();
+        String productId = business.getProductId();
         Product product = productService.getProductById(productId);
         // 计算得到单位净值
         BigDecimal temp = BigDecimalUtil.div(product.getNetWorth(), product.getPortion());
@@ -114,11 +120,11 @@ public class LiquidationServiceImpl implements LiquidationService {
         product.setPortion(BigDecimalUtil.add(tradePortion, product.getPortion()));
         productService.updateProduct(product);
         // 客户持仓增加
-        Integer clientId = businessDto.getClientId();
-        String cardId = businessDto.getCardId();
+        Integer clientId = business.getClientId();
+        String cardId = business.getCardId();
         Long positionId = positionService.getPositionId(productId, clientId, cardId);
         if(positionId == null){
-            // 客户没有当前持仓 则新见持仓
+            // 客户没有当前持仓 则新建持仓
             ClientPosition clientPosition = new ClientPosition();
             clientPosition.setClientId(clientId);
             clientPosition.setProductId(productId);
@@ -132,13 +138,13 @@ public class LiquidationServiceImpl implements LiquidationService {
             clientPosition.setPortion(tradePortion);
             positionService.addPosition(clientPosition);
         }else{
-            // 找到对应的positionId
             positionService.updatePosition(positionId, tradePortion);
         }
     }
-    private void redeemConfirm(BusinessDto businessDto){
-        BigDecimal tradePortion = businessDto.getTradePortion();
-        String productId = businessDto.getProductId();
+
+    private void redeemConfirm(Business business){
+        BigDecimal tradePortion = business.getTradePortion();
+        String productId = business.getProductId();
         Product product = productService.getProductById(productId);
         // 计算得到单位净值
         BigDecimal temp = BigDecimalUtil.div(product.getNetWorth(), product.getPortion());
@@ -148,9 +154,9 @@ public class LiquidationServiceImpl implements LiquidationService {
         product.setPortion(BigDecimalUtil.sub(product.getPortion(), tradePortion));
         productService.updateProduct(product);
         // 银行卡到账
-        bankCardService.updateBalance(businessDto.getCardId(), tradeAmount);
+        bankCardService.updateBalance(business.getCardId(), tradeAmount);
         // 持仓减少
-        Long positionId = positionService.getPositionId(productId, businessDto.getClientId(), businessDto.getCardId());
+        Long positionId = positionService.getPositionId(productId, business.getClientId(), business.getCardId());
         positionService.updatePosition(positionId, tradePortion.negate());
     }
 }

@@ -20,6 +20,6 @@ public interface LiquidationMapper {
             "values (#{liquidationId}, #{productId}, #{netWorthPer}, #{liquidationDate})")
     void addLiquidation(Liquidation liquidation);
 
-    @Select("select net_worth_per from liquidation where product_id = #{ProductId} limit 15")
+    @Select("select net_worth_per from liquidation where product_id = #{ProductId} order by liquidation_date desc limit 0, 15")
     List<BigDecimal> selectAllByProductId(String productId);
 }

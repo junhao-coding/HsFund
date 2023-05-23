@@ -28,5 +28,5 @@ public interface LiquidationService {
     /**
      * 交易确认
      */
-    void businessConfirm();
+    String businessConfirm();
 }

@@ -20,7 +20,17 @@ public interface PositionService {
 
     List<ClientPosition> getPositionsByClientId(int clientId);
 
-    List<String> getOrdersByPositionId(int year, int month, long positionId);
+    List<BigDecimal> getOrdersByPositionId(int year, int month, long positionId);
 
     Long getPositionId(String productId, int clientId, String cardId);
+
+    /**
+     * 根据用户id和产品id查询客户银行卡和所持有的份额
+     */
+    List<ClientPosition> getPositionPortion(Integer clientId,String productId);
+
+    /**
+     * 查询客户产品银行卡所持有的份额
+     */
+    BigDecimal getTradePortion(Integer clientId,String productId,String cardId);
 }
