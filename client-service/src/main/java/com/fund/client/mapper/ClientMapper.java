@@ -52,5 +52,5 @@ public interface ClientMapper {
 
     List<ClientDTO> getClientLikely(String keyword);
 
-    List<ClientProductDTO> getClientProductLikely(String keyword);
+    List<ClientProductDTO>getClientProductLikely(String keyword);
 }

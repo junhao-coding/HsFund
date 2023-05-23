@@ -71,7 +71,8 @@ public class BusinessServiceImpl implements BusinessService {
         BigDecimal applySellPortion = businessMapper.getApplySellPortion(business);
         //持有总份额
         BigDecimal totalPortion = positionService.getTradePortion(business.getClientId(), business.getProductId(), business.getCardId());
-        if(totalPortion!=null&&totalPortion.compareTo(tradePortion.add(applySellPortion))!=1) throw new BalanceNotEnoughException("申购份额已超出持有份额");
+        if(applySellPortion!=null) tradePortion = tradePortion.add(applySellPortion);
+        if(totalPortion!=null&&totalPortion.compareTo(tradePortion)!=1) throw new BalanceNotEnoughException("申购份额已超出赎回上限");
         businessMapper.insertSellFund(business);
     }
 

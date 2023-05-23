@@ -10,9 +10,9 @@ import java.util.Random;
 public class BusinessIdGenerator {
     public static Long generateBusinessId(){
         Date nowTime = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SS");
         String now = sdf.format(nowTime).replaceAll("-","");
-        Random random = new Random();
-        return Long.valueOf(now + (random.nextInt(90000) + 10000));
+        return Long.valueOf(now);
     }
+
 }

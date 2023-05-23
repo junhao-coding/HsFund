@@ -33,13 +33,13 @@
         join product b on a.product_id=b.product_id
         join client c on a.client_id=c.client_id
         <where>
-            <if test="clientName!=null">
+            <if test="clientName!=null and clientName!=''">
                 c.client_name like '${clientName}%'
             </if>
-            <if test="productName!=null">
+            <if test="productName!=null and productName!=''">
                 and b.product_name like '${productName}%'
             </if>
-            <if test="tradeType!=null">
+            <if test="tradeType!=null and tradeType!=''">
                 and a.trade_type = #{tradeType}
             </if>
         </where>

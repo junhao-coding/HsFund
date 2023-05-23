@@ -21,10 +21,23 @@
                 #{productAdmin},#{productManager},#{productCustodian})
     </insert>
     <update id="updateProduct">
-        update product set product_name=#{productName}, net_worth=#{netWorth},net_worth_old=#{netWorthOld},portion=#{portion},
-                           product_type=#{productType},risk_level=#{riskLevel},product_admin=#{productAdmin},product_manager=#{productManager},
-                           product_custodian=#{productCustodian},purchase_state=#{purchaseState},sell_state=#{sellState}
-                        where product_id=#{productId}
+        update product
+        <set>
+            <if test="productName!=null">product_name=#{productName},</if>
+            <if test="netWorth!=null">net_worth=#{netWorth},</if>
+            <if test="netWorthOld!=null">net_worth_old=#{netWorthOld},</if>
+            <if test="portion!=null">portion=#{portion},</if>
+            <if test="productType!=null">product_type=#{productType},</if>
+            <if test="riskLevel!=null">risk_level=#{riskLevel},</if>
+            <if test="productAdmin!=null">product_admin=#{productAdmin},</if>
+            <if test="productManager!=null">product_manager=#{productManager},</if>
+            <if test="productCustodian!=null">product_custodian=#{productCustodian},</if>
+            <if test="purchaseState!=null">purchase_state=#{purchaseState},</if>
+            <if test="sellState!=null">sell_state=#{sellState},</if>
+            <if test="sellState!=null">sell_state=#{sellState},</if>
+            <if test="setDate!=null">set_date=#{setDate}</if>
+        </set>
+        where product_id=#{productId}
     </update>
     <update id="updateNetWorthBatch" parameterType="java.util.List">
         <foreach collection="list" item="item" index="index" open="" close="" separator=";">
