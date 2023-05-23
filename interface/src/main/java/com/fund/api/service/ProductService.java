@@ -1,7 +1,7 @@
 package com.fund.api.service;
 
 
-import com.fund.api.dto.NetWorthDto;
+import com.fund.api.dto.NetWorthDTO;
 import com.fund.api.dto.Page;
 import com.fund.api.entity.Product;
 import com.hundsun.jrescloud.rpc.annotation.CloudService;
@@ -25,9 +25,9 @@ public interface ProductService {
 
     List<Map<String,Object>> getProductLikely(String s);
 
-    List<NetWorthDto> getNetWorthDto();
+    List<NetWorthDTO> getNetWorthDto();
 
-    void updateNetWorthBatch(List<NetWorthDto> list);
+    void updateNetWorthBatch(List<NetWorthDTO> list);
 
     void updateNetWorthOld();
 }

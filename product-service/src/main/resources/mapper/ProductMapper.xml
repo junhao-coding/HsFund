@@ -62,7 +62,7 @@
                                                          order by product_id
                                                          limit 0,20
     </select>
-    <select id="getNetWorthDto" resultType="com.fund.api.dto.NetWorthDto">
+    <select id="getNetWorthDto" resultType="com.fund.api.dto.NetWorthDTO">
         select product_id, net_worth, portion from product
     </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.fund.liquidation.controller;
 
 import com.fund.api.dto.Result;
+import com.fund.api.entity.Liquidation;
 import com.fund.api.service.LiquidationService;
 import com.fund.api.util.SystemDateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class LiquidationController {
 
     @GetMapping("/netWorthPer/{productId}")
     public Result getAllByProductId(@PathVariable String productId){
-        List<BigDecimal> worthList = liquidationService.selectAllByProductId(productId);
+        List<Liquidation> worthList = liquidationService.selectAllByProductId(productId);
         if(worthList == null || worthList.size() == 0){
             return Result.fail("该产品不存在或该产品目前还没有净值数据");
         }
@@ -43,8 +44,12 @@ public class LiquidationController {
 
     @PutMapping("/marketUpdate")
     public Result marketUpdate(){
-        liquidationService.marketUpdate();
-        return Result.ok();
+        CompletableFuture<String> futureMarket = new CompletableFuture<>();
+        new Thread(() -> {
+            String description = liquidationService.marketUpdate();
+            futureMarket.complete(description);
+        }).start();
+        return Result.ok(futureMarket);
     }
 
     @PutMapping("/confirm")

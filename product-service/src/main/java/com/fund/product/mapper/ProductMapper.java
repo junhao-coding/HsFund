@@ -1,12 +1,10 @@
 package com.fund.product.mapper;
 
-import com.fund.api.dto.NetWorthDto;
+import com.fund.api.dto.NetWorthDTO;
 import com.fund.api.entity.Product;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -29,9 +27,9 @@ public interface ProductMapper {
      */
     List<Map<String, Object>> selectProductLikely(String option);
 
-    List<NetWorthDto> getNetWorthDto();
+    List<NetWorthDTO> getNetWorthDto();
 
-    void updateNetWorthBatch(List<NetWorthDto> list);
+    void updateNetWorthBatch(List<NetWorthDTO> list);
 
     @Update("update product set net_worth_old = net_worth")
     void updateNetWorthOld();

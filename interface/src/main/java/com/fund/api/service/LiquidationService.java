@@ -19,12 +19,12 @@ public interface LiquidationService {
     /**
      * 根据产品号查询所有单位净值变化
      */
-    List<BigDecimal> selectAllByProductId(String productId);
+    List<Liquidation> selectAllByProductId(String productId);
 
     /**
      * 行情更新
      */
-    void marketUpdate();
+    String marketUpdate();
     /**
      * 交易确认
      */

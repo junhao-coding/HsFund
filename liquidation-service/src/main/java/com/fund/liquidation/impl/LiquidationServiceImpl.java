@@ -1,6 +1,6 @@
 package com.fund.liquidation.impl;
 
-import com.fund.api.dto.NetWorthDto;
+import com.fund.api.dto.NetWorthDTO;
 import com.fund.api.entity.Business;
 import com.fund.api.entity.ClientPosition;
 import com.fund.api.entity.Liquidation;
@@ -60,15 +60,15 @@ public class LiquidationServiceImpl implements LiquidationService {
     }
 
     @Override
-    public List<BigDecimal> selectAllByProductId(String productId) {
+    public List<Liquidation> selectAllByProductId(String productId) {
         return liquidationMapper.selectAllByProductId(productId);
     }
 
     @Transactional
     @Override
-    public void marketUpdate(){
-        List<NetWorthDto> netWorthDtoList = productService.getNetWorthDto();
-        for (NetWorthDto netWorthDto : netWorthDtoList) {
+    public String marketUpdate(){
+        List<NetWorthDTO> netWorthDtoList = productService.getNetWorthDto();
+        for (NetWorthDTO netWorthDto : netWorthDtoList) {
             BigDecimal rate = BigDecimal.valueOf(RandomUtils.nextDouble(0.9, 1.1));
             netWorthDto.setNetWorth(BigDecimalUtil.mul(rate, netWorthDto.getNetWorth()));
             netWorthDto.setNetWorthPer(BigDecimalUtil.div(netWorthDto.getNetWorth(), netWorthDto.getPortion()));
@@ -77,6 +77,7 @@ public class LiquidationServiceImpl implements LiquidationService {
         }
         productService.updateNetWorthOld();
         productService.updateNetWorthBatch(netWorthDtoList);
+        return "市场行情更新成功";
     }
 
     /**

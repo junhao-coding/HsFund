@@ -1,6 +1,6 @@
 package com.fund.product.impl;
 
-import com.fund.api.dto.NetWorthDto;
+import com.fund.api.dto.NetWorthDTO;
 import com.fund.api.dto.Page;
 import com.fund.api.entity.Product;
 import com.fund.api.service.ProductService;
@@ -63,12 +63,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<NetWorthDto> getNetWorthDto(){
+    public List<NetWorthDTO> getNetWorthDto(){
         return productMapper.getNetWorthDto();
     }
 
     @Override
-    public void updateNetWorthBatch(List<NetWorthDto> list) {
+    public void updateNetWorthBatch(List<NetWorthDTO> list) {
         productMapper.updateNetWorthBatch(list);
     }
 

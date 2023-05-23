@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -20,6 +19,6 @@ public interface LiquidationMapper {
             "values (#{liquidationId}, #{productId}, #{netWorthPer}, #{liquidationDate})")
     void addLiquidation(Liquidation liquidation);
 
-    @Select("select net_worth_per from liquidation where product_id = #{ProductId} order by liquidation_date desc limit 0, 15")
-    List<BigDecimal> selectAllByProductId(String productId);
+    @Select("select net_worth_per, liquidation_date from liquidation where product_id = #{ProductId} order by liquidation_date desc limit 0, 15")
+    List<Liquidation> selectAllByProductId(String productId);
 }
